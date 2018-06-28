@@ -7,6 +7,8 @@ Dependencies:
 Obspy is a Python toolbox for seismology.
 More information about the Obspy project can be found [here](https://github.com/obspy/obspy/wiki).
 
-Files are going to be uploaded by the end of the next week! Last two months were busy.
+Progress/updates:
+Initial upload done.
+Next step is to generalize some procedures, include some examples and document the script better.
 
-Last update: 20. June 2018.
+Last update: 28. June 2018.
