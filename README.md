@@ -7,7 +7,7 @@ Dependencies:
 Obspy is a Python toolbox for seismology.
 More information about the Obspy project can be found [here](https://github.com/obspy/obspy/wiki).
 
-Progress/updates:
+Updates:
 Initial upload done.
 Next step is to generalize some procedures, include some examples and document the script better.
 
