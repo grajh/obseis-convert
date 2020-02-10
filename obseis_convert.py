@@ -23,6 +23,11 @@ from obspy import read
 
 
 def folder_check(save_path):
+    """Create folders necessary for given path.
+    
+    Arguments:
+        save_path {string}
+    """
     try:
         os.makedirs(save_path)
     except OSError:
@@ -30,18 +35,22 @@ def folder_check(save_path):
             raise
 
 class SeisFile(object):
-    """Seismogram file class."""
+    """Seismogram file class. Holds information about each input file
+    and has three methods."""
 
     def __init__(self, file_path, file_path_out, file_ext, in_format,
        out_format, extract_params_fname, fname_separator='_'):
+        # Split file name and path.
         split_path = os.path.split(file_path)
         split_path_out = os.path.split(file_path_out)
+        # Write function arguments.
         self.fpath = file_path
         self.fpath_out = file_path_out
         self.fname = split_path[1]
         self.fname_out = split_path_out[1]
         self.fext = file_ext
 
+        # Format check.
         if in_format:
             self.in_format = in_format.upper()
         else:
@@ -50,32 +59,30 @@ class SeisFile(object):
         if out_format:
             self.out_format = out_format.upper()
         else:
+            # If no output format is provided, save to mseed.
             self.out_format = 'MSEED'
 
         self.extract_params_fname = extract_params_fname
         self.fname_separ = fname_separator
 
-        if file_ext:
-            fpath_trun = os.path.splitext(self.fpath)[0]
-            fname_trun = os.path.splitext(self.fname)[0]
-            self.fpath_trun = fpath_trun
-            self.fname_trun = fname_trun
-            fpath_trun_out = os.path.splitext(self.fpath_out)[0]
-            fname_trun_out = os.path.splitext(self.fname_out)[0]
-            self.fpath_trun_out = fpath_trun_out
-            self.fname_trun_out = fname_trun_out
-        else:
-            self.fpath_trun = self.fpath
-            self.fname_trun = self.fname
-            self.fpath_trun_out = self.fpath_out
-            self.fname_trun_out = self.fname_out
+        # Split extension and file name.
+        fpath_trun = os.path.splitext(self.fpath)[0]
+        fname_trun = os.path.splitext(self.fname)[0]
+        self.fpath_trun = fpath_trun
+        self.fname_trun = fname_trun
+        fpath_trun_out = os.path.splitext(self.fpath_out)[0]
+        fname_trun_out = os.path.splitext(self.fname_out)[0]
+        self.fpath_trun_out = fpath_trun_out
+        self.fname_trun_out = fname_trun_out
 
+        # Format output file name.
         self.fout = f"{self.fpath_trun_out}.{out_format}"
 
     def extract_params_from_name(self):
         """Extracts parameters from input seismogram file name if data
-        provided in header is not correct. Input file name in this case
-        is of form:
+        provided in header is not correct. Input file name provided
+        under 'self.fname_trun' variable and in the case of option
+        number 1 is of form:
             STAT_C_SRT_YYYYMMDD_HHMM, where
                 STAT - station ID/name,
                 C - seismogram component,
@@ -86,7 +93,9 @@ class SeisFile(object):
                     DD - day,
                 HHMM - start time of the seismogram,
                     HH - hours,
-                    MM - minutes."""
+                    MM - minutes.
+        """
+
         if self.extract_params_fname == 1:
             file_params = list(filter(
                 None, self.fname_trun.split(self.fname_separ)))
@@ -114,6 +123,10 @@ class SeisFile(object):
             # self.starttime = file_params[8:]
 
     def read_file(self):
+        """Parse file content to Obspy stream object and update basic
+        parameters based on file name if appropriate choice is given.
+        """
+
         try:
             self.st = read(self.fpath, format=self.in_format)
 
@@ -132,6 +145,8 @@ class SeisFile(object):
             print(e)
 
     def write_file(self):
+        """Write stream object to specified format."""
+
         self.st.write(self.fout, format=self.out_format)
 
 
@@ -198,6 +213,8 @@ class SeisFiles(object):
                 else:
                     continue
 
+                # Create 'SeisFile' object for each file found
+                # recursively in root folder.
                 seis_file = SeisFile(file_path, file_path_out, self.in_ext,
                     self.in_format, self.out_format,
                     self.extract_params_fname, self.fname_separ)
