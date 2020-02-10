@@ -9,7 +9,7 @@ More information about the Obspy project can be found [here](https://github.com/
 
 Example:
 
-'''
+```
 # Import the module.
 import obseis_convert as osc
 
@@ -48,7 +48,7 @@ sfs = osc.SeisFiles(
 
 # Call convert files method and wait ... DONE!
 sfs.convert_files()
-'''
+```
 
 Updates:
 Major update. Improved and cleaned.
