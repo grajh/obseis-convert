@@ -52,6 +52,9 @@ sfs.convert_files()
 
 Updates:
 Major update. Improved and cleaned. Added an example.
-Next step. Include more comments in the script.
+
+Next steps:
+    Include more comments in the script.
+    Wildcards for filenames (fnmatch) and/or seismogram parameters.
 
 Last update: 10. February 2020.
