@@ -15,7 +15,8 @@ import obseis_convert as osc
 
 # Define user parameters.
 ROOT_FOLDER = "/path/to/root/folder/"
-# File format of input files.
+# File format of input files. Leave empty to automatically detect
+# input file format.
 IN_FILE_FORMAT = "sac"
 # File extension of input files.
 # Use empty string or None to go through all files.
@@ -26,7 +27,7 @@ OUT_FILE_FORMAT = "mseed"
 # Parameter for extracting parameters from file name.
 # Input 0 to extract parameters from header.
 # Currently two templates (options 1 and 2) are implemented for
-# extracting parameters. Modify them to you needs in
+# extracting parameters from file name. Modify them to you needs in
 # 'extract_params_from_name' method of 'SeisFile' class.
 EXTRACT_PARAMS_FNAME = 2
 # Specifiy separator between parameters in file name.
