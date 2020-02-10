@@ -51,6 +51,7 @@ sfs.convert_files()
 ```
 
 Updates:
-Major update. Improved and cleaned. Added an example. Document the script better.
+Major update. Improved and cleaned. Added an example.
+Next step. Include more comments in the script.
 
 Last update: 10. February 2020.
